@@ -4,6 +4,22 @@ import plotly.express as px
 
 st.set_page_config(layout="wide")
 
+# Custom CSS for table formatting
+st.markdown("""
+    <style>
+    .stDataFrame [data-testid="stDataFrameDataCell"] {
+        text-align: right;
+    }
+    .stDataFrame [data-testid="stHeaderCell"] {
+        height: 80px;
+        white-space: normal;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("AI Job Impact Calculator")
 
 # Create columns for inputs across the top
@@ -17,13 +33,9 @@ with col1:
         max_value=100.0,
         value=5.0,
         step=0.1,
-        key="high_initial"
+        key="high_initial",
+        help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost."
     ) / 100.0
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost.
-        </div>
-    """, unsafe_allow_html=True)
 
     st.write("High Impact Rate Change (%)")
     high_change = st.number_input(
@@ -32,13 +44,9 @@ with col1:
         max_value=100.0,
         value=10.0,
         step=0.1,
-        key="high_change"
+        key="high_change",
+        help="Enter your assumption of by how many percent the initial 1st Tier Content/Admin job loss rate will increase post 2025."
     ) / 100.0
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        Enter your assumption of by how many percent the initial 1st Tier Content/Admin job loss rate will increase post 2025.
-        </div>
-    """, unsafe_allow_html=True)
 
 with col2:
     st.write("Initial Moderate Impact Rate (%)")
@@ -48,13 +56,9 @@ with col2:
         max_value=100.0,
         value=2.0,
         step=0.1,
-        key="moderate_initial"
+        key="moderate_initial",
+        help="Enter your assumption regarding the % of total 2nd Tier Content/Admin jobs that will be lost."
     ) / 100.0
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        Enter your assumption regarding the % of total 2nd Tier Content/Admin jobs that will be lost.
-        </div>
-    """, unsafe_allow_html=True)
 
     st.write("Moderate Impact Rate Change (%)")
     moderate_change = st.number_input(
@@ -63,13 +67,9 @@ with col2:
         max_value=100.0,
         value=5.0,
         step=0.1,
-        key="moderate_change"
+        key="moderate_change",
+        help="Enter your assumption of by how many percent the initial 2nd Tier Content/Admin job loss rate will increase post 2025."
     ) / 100.0
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        Enter your assumption of by how many percent the initial 2nd Tier Content/Admin job loss rate will increase post 2025.
-        </div>
-    """, unsafe_allow_html=True)
 
 with col3:
     st.write("Labor Force Growth (in millions)")
@@ -80,14 +80,9 @@ with col3:
         value=0.620,
         step=0.001,
         format="%.3f",
-        key="labor_growth"
+        key="labor_growth",
+        help="Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033. If you believe that the annual labor force growth will be different, please enter the number of new workers expected to enter the labor force annually (in millions)."
     )
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033. 
-        If you believe that the annual labor force growth will be different, please enter the number of new workers expected to enter the labor force annually (in millions).
-        </div>
-    """, unsafe_allow_html=True)
 
 with col4:
     st.write("New Jobs Per Year (in millions)")
@@ -98,15 +93,9 @@ with col4:
         value=1.084,
         step=0.001,
         format="%.3f",
-        key="new_jobs"
+        key="new_jobs",
+        help="The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033. If you believe that the annual job creation will be different, please enter the new jobs you expect annually (in millions)."
     )
-    st.markdown("""
-        <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
-        The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. 
-        The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033. 
-        If you believe that the annual job creation will be different, please enter the new jobs you expect annually (in millions).
-        </div>
-    """, unsafe_allow_html=True)
 
 def calculate_projections(
     high_impact_initial_rate,
@@ -119,26 +108,28 @@ def calculate_projections(
     # Initial values for 2024
     base_labor_force = 169.2  # millions
     base_employed = 162.7    # millions
-    high_impact_jobs = 22.74  # millions
-    moderate_impact_jobs = 5.08  # millions
+    initial_high_impact_jobs = 22.74  # millions
+    initial_moderate_impact_jobs = 5.08  # millions
     
     years = range(2025, 2034)
     data = []
     
+    high_impact_jobs = initial_high_impact_jobs
+    moderate_impact_jobs = initial_moderate_impact_jobs
+    
     for year in years:
-        # Calculate rates (ensuring they don't exceed 100%)
         if year == 2025:
             high_rate = high_impact_initial_rate
             moderate_rate = moderate_impact_initial_rate
             labor_force = base_labor_force
             total_employed = base_employed
-            prev_ai_job_loss = 0  # Initialize for first year
+            prev_ai_job_loss = 0
         else:
             high_rate = min(1.0, prev_high_rate * (1 + high_impact_rate_change))
             moderate_rate = min(1.0, prev_moderate_rate * (1 + moderate_impact_rate_change))
             labor_force = prev_labor_force + labor_force_growth
             total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss
-            
+        
         # Calculate job losses
         high_impact_loss = high_impact_jobs * high_rate
         moderate_impact_loss = moderate_impact_jobs * moderate_rate
@@ -148,7 +139,7 @@ def calculate_projections(
         high_impact_jobs -= high_impact_loss
         moderate_impact_jobs -= moderate_impact_loss
         
-        # Calculate unemployment (modified formula)
+        # Calculate unemployment
         unemployed = labor_force - total_employed + total_ai_job_loss
         unemployment_rate = (unemployed / labor_force)
         
@@ -159,20 +150,19 @@ def calculate_projections(
         prev_labor_force = labor_force
         prev_ai_job_loss = total_ai_job_loss
         
-        # Add to results
         data.append({
             'Year': year,
             'Total Labor Force (M)': round(labor_force, 2),
             'Total Civilians Employed (M)': round(total_employed, 2),
-            '% Rate of Job Loss Tier 1 Jobs': f"{high_rate:.0%}",
+            '% Rate of Job Loss Tier 1 Jobs': f"{high_rate:.1%}",
             'Total # of Tier 1 Jobs (M)': round(high_impact_jobs, 2),
             '# of Tier 1 Jobs Lost (M)': round(high_impact_loss, 2),
-            '% Rate of Job Loss Tier 2 Jobs': f"{moderate_rate:.0%}",
+            '% Rate of Job Loss Tier 2 Jobs': f"{moderate_rate:.1%}",
             'Total # of Tier 2 Jobs (M)': round(moderate_impact_jobs, 2),
             '# of Tier 2 Jobs Lost (M)': round(moderate_impact_loss, 2),
             'Total Number of Jobs Lost due to AI (M)': round(total_ai_job_loss, 2),
             'Total Number of Unemployed (M)': round(unemployed, 2),
-            'Unemployment Rate (%)': f"{unemployment_rate:.0%}"
+            'Unemployment Rate (%)': f"{unemployment_rate:.1%}"
         })
     
     return pd.DataFrame(data)
@@ -197,17 +187,17 @@ st.dataframe(
     hide_index=True,
     column_config={
         "Year": st.column_config.NumberColumn(format="%d", width="small"),
-        "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "% Rate of Job Loss Tier 1 Jobs": st.column_config.TextColumn(width="medium"),
-        "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "% Rate of Job Loss Tier 2 Jobs": st.column_config.TextColumn(width="medium"),
-        "Total # of Tier 2 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "# of Tier 2 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "Total Number of Jobs Lost due to AI (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "Total Number of Unemployed (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
-        "Unemployment Rate (%)": st.column_config.TextColumn(width="medium")
+        "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "% Rate of Job Loss Tier 1 Jobs": st.column_config.TextColumn(width="small"),
+        "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "% Rate of Job Loss Tier 2 Jobs": st.column_config.TextColumn(width="small"),
+        "Total # of Tier 2 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "# of Tier 2 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "Total Number of Jobs Lost due to AI (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "Total Number of Unemployed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
+        "Unemployment Rate (%)": st.column_config.TextColumn(width="small")
     },
     use_container_width=True
 )
