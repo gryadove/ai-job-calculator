@@ -14,7 +14,7 @@ with col1:
         max_value=100.0,
         value=5.0,
         step=0.1,
-        help="Enter the initial rate of job displacement for high-impact jobs"
+        help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost"
     ) / 100.0
 
     high_change = st.number_input(
@@ -23,7 +23,7 @@ with col1:
         max_value=100.0,
         value=10.0,
         step=0.1,
-        help="Enter the annual change in high-impact displacement rate"
+        help="Enter your assuption of by how many percent the initial 1st Tier Content/Admin job loss rate will increae post 2025"
     ) / 100.0
 
 with col2:
@@ -33,7 +33,7 @@ with col2:
         max_value=100.0,
         value=2.0,
         step=0.1,
-        help="Enter the initial rate of job displacement for moderate-impact jobs"
+        help="Enter your assumption regarding the % of total 2nd Tier Content/Admin jobs that will be lost"
     ) / 100.0
 
     moderate_change = st.number_input(
@@ -42,7 +42,7 @@ with col2:
         max_value=100.0,
         value=5.0,
         step=0.1,
-        help="Enter the annual change in moderate-impact displacement rate"
+        help="Enter your assuption of by how many percent the initial 2nd Tier Content/Admin job loss rate will increae post 2025"
     ) / 100.0
 
 with col3:
@@ -52,7 +52,7 @@ with col3:
         max_value=5.0,
         value=1.0,
         step=0.1,
-        help="Enter the expected annual growth in labor force (in millions)"
+        help="Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033. If you believe that the annual labor force growth will be differnet, please enter the number of new workers expected to enter the labor force annually (in millions)"
     )
 
 with col4:
@@ -62,7 +62,7 @@ with col4:
         max_value=10.0,
         value=2.0,
         step=0.1,
-        help="Enter the number of new jobs expected to be created annually (in millions)"
+        help="The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033.  If you believe that the annual job creation will be different, please enter the new new jobs you expect annually (in millions)"
     )
 
 def calculate_projections(
