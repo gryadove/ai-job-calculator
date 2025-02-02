@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+st.set_page_config(layout="wide")
+
 st.title("AI Job Impact Calculator")
 
 # Create columns for inputs across the top
@@ -50,8 +52,9 @@ with col3:
         "Labor Force Growth (in millions)",
         min_value=0.0,
         max_value=5.0,
-        value=1.0,
-        step=0.1,
+        value=0.62,
+        step=0.001,
+        format="%.3f",
         help="Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033. If you believe that the annual labor force growth will be differnet, please enter the number of new workers expected to enter the labor force annually (in millions)"
     )
 
@@ -60,9 +63,10 @@ with col4:
         "New Jobs per Year (in millions)",
         min_value=0.0,
         max_value=10.0,
-        value=2.0,
-        step=0.1,
-        help="The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033.  If you believe that the annual job creation will be different, please enter the new new jobs you expect annually (in millions)"
+        value=1.084,
+        step=0.001,
+        format="%.3f",
+        help="The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033. If you believe that the annual job creation will be different, please enter the new new jobs you expect annually (in millions)"
     )
 
 def calculate_projections(
@@ -94,7 +98,7 @@ def calculate_projections(
             high_rate = min(1.0, prev_high_rate * (1 + high_impact_rate_change))
             moderate_rate = min(1.0, prev_moderate_rate * (1 + moderate_impact_rate_change))
             labor_force = prev_labor_force + labor_force_growth
-            total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss  # Use previous year's job loss
+            total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss
             
         # Calculate job losses
         high_impact_loss = high_impact_jobs * high_rate
@@ -114,20 +118,22 @@ def calculate_projections(
         prev_moderate_rate = moderate_rate
         prev_employed = total_employed
         prev_labor_force = labor_force
-        prev_ai_job_loss = total_ai_job_loss  # Store for next iteration
+        prev_ai_job_loss = total_ai_job_loss
         
         # Add to results
         data.append({
             'Year': year,
-            'Civilian_Labor_Force': round(labor_force, 1),
-            'Total_Employed': round(total_employed, 1),
-            'High_Impact_Rate': f"{high_rate:.1%}",
-            'High_Impact_Jobs_Lost': round(high_impact_loss, 2),
-            'Moderate_Impact_Rate': f"{moderate_rate:.1%}",
-            'Moderate_Impact_Jobs_Lost': round(moderate_impact_loss, 2),
-            'Total_AI_Job_Loss': round(total_ai_job_loss, 2),
-            'Unemployed': round(unemployed, 2),
-            'Unemployment_Rate': f"{unemployment_rate:.1%}"
+            'Total Labor Force (M)': round(labor_force, 2),
+            'Total Civilians Employed (M)': round(total_employed, 2),
+            '% Rate of Job Loss Tier 1 Jobs': f"{high_rate:.1%}",
+            'Total # of Tier 1 Jobs (M)': round(high_impact_jobs, 2),
+            '# of Tier 1 Jobs Lost (M)': round(high_impact_loss, 2),
+            '% Rate of Job Loss Tier 2 Jobs': f"{moderate_rate:.1%}",
+            'Total # of Tier 2 Jobs (M)': round(moderate_impact_jobs, 2),
+            '# of Tier 2 Jobs Lost (M)': round(moderate_impact_loss, 2),
+            'Total Number of Jobs Lost due to AI (M)': round(total_ai_job_loss, 2),
+            'Total Number of Unemployed (M)': round(unemployed, 2),
+            'Unemployment Rate (%)': f"{unemployment_rate:.1%}"
         })
     
     return pd.DataFrame(data)
@@ -151,7 +157,18 @@ st.dataframe(
     df,
     hide_index=True,
     column_config={
-        "Year": st.column_config.NumberColumn(format="%d"),
+        "Year": st.column_config.NumberColumn(format="%d", width="small"),
+        "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1%", width="medium"),
+        "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "% Rate of Job Loss Tier 2 Jobs": st.column_config.NumberColumn(format="%.1%", width="medium"),
+        "Total # of Tier 2 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "# of Tier 2 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "Total Number of Jobs Lost due to AI (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "Total Number of Unemployed (M)": st.column_config.NumberColumn(format="%.2f", width="medium"),
+        "Unemployment Rate (%)": st.column_config.NumberColumn(format="%.1%", width="medium")
     },
     use_container_width=True
 )
@@ -160,16 +177,17 @@ st.dataframe(
 st.subheader("Visualizations")
 
 # Employment and Labor Force Trends
-fig1 = px.line(df, x='Year', y=['Civilian_Labor_Force', 'Total_Employed'],
+fig1 = px.line(df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
                title='Employment and Labor Force Trends')
 st.plotly_chart(fig1)
 
 # Job Losses
-fig2 = px.line(df, x='Year', y=['High_Impact_Jobs_Lost', 'Moderate_Impact_Jobs_Lost', 'Total_AI_Job_Loss'],
+fig2 = px.line(df, x='Year', 
+               y=['# of Tier 1 Jobs Lost (M)', '# of Tier 2 Jobs Lost (M)', 'Total Number of Jobs Lost due to AI (M)'],
                title='AI-Related Job Losses')
 st.plotly_chart(fig2)
 
 # Unemployment Rate
-fig3 = px.line(df, x='Year', y='Unemployment_Rate',
+fig3 = px.line(df, x='Year', y='Unemployment Rate (%)',
                title='Unemployment Rate Projection')
 st.plotly_chart(fig3)
