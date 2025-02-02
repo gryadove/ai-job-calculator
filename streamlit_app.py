@@ -74,8 +74,8 @@ def calculate_projections(
     new_jobs_per_year
 ):
     # Initial values for 2024
-    base_labor_force = 168.5  # millions
-    base_employed = 161.7    # millions
+    base_labor_force = 169.2  # millions
+    base_employed = 162.7    # millions
     high_impact_jobs = 22.74  # millions
     moderate_impact_jobs = 5.08  # millions
     
