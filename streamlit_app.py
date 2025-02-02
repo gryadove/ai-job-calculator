@@ -16,7 +16,8 @@ with col1:
         min_value=0.0,
         max_value=100.0,
         value=5.0,
-        step=0.1
+        step=0.1,
+        key="high_initial"
     ) / 100.0
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
@@ -30,7 +31,8 @@ with col1:
         min_value=0.0,
         max_value=100.0,
         value=10.0,
-        step=0.1
+        step=0.1,
+        key="high_change"
     ) / 100.0
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
@@ -45,7 +47,8 @@ with col2:
         min_value=0.0,
         max_value=100.0,
         value=2.0,
-        step=0.1
+        step=0.1,
+        key="moderate_initial"
     ) / 100.0
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
@@ -59,7 +62,8 @@ with col2:
         min_value=0.0,
         max_value=100.0,
         value=5.0,
-        step=0.1
+        step=0.1,
+        key="moderate_change"
     ) / 100.0
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
@@ -75,7 +79,8 @@ with col3:
         max_value=5.0,
         value=0.620,
         step=0.001,
-        format="%.3f"
+        format="%.3f",
+        key="labor_growth"
     )
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
@@ -92,7 +97,8 @@ with col4:
         max_value=10.0,
         value=1.084,
         step=0.001,
-        format="%.3f"
+        format="%.3f",
+        key="new_jobs"
     )
     st.markdown("""
         <div style='font-size: 0.9em; color: #666666; padding: 0.5em 0;'>
