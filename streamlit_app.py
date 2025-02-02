@@ -1,34 +1,69 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.express as px
 
-# Page title and description
-st.title('AI Job Impact Calculator')
+st.title("AI Job Impact Calculator")
 
-# Sidebar with explanatory text and inputs
-st.sidebar.markdown("""
-    ### About the Assumptions
-    * **Labor Force Growth:** Default is 620,000/year (U.S. Bureau of Labor Forecast)
-    * **Historical Job Creation:** Default is 1,084,000/year (based on historical average)
-    * Adjust other values to see different scenarios
-""")
+# Create columns for inputs across the top
+col1, col2, col3, col4 = st.columns(4)
 
-with st.sidebar:
-    st.header('Input Parameters')
-    high_initial = st.number_input('Initial High Impact Job Loss Rate (2025)', 
-                                 value=0.05, min_value=0.0, max_value=1.0, format="%.3f")
-    moderate_initial = st.number_input('Initial Moderate Impact Job Loss Rate (2025)', 
-                                    value=0.025, min_value=0.0, max_value=1.0, format="%.3f")
-    high_change = st.number_input('High Impact Rate Annual Change', 
-                               value=0.30, min_value=0.0, max_value=5.0, format="%.3f")
-    moderate_change = st.number_input('Moderate Impact Rate Annual Change', 
-                                  value=0.20, min_value=0.0, max_value=5.0, format="%.3f")
-    # Pre-filled values for these two inputs
-    labor_growth = st.number_input('Annual Labor Force Growth (millions)', 
-                                value=0.62, format="%.2f")
-    new_jobs = st.number_input('New Jobs Created Annually', 
-                            value=1084000, format="%d")
+with col1:
+    high_initial = st.number_input(
+        "Initial High Impact Rate (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=5.0,
+        step=0.1,
+        help="Enter the initial rate of job displacement for high-impact jobs"
+    ) / 100.0
+
+    high_change = st.number_input(
+        "High Impact Rate Change (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=10.0,
+        step=0.1,
+        help="Enter the annual change in high-impact displacement rate"
+    ) / 100.0
+
+with col2:
+    moderate_initial = st.number_input(
+        "Initial Moderate Impact Rate (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=2.0,
+        step=0.1,
+        help="Enter the initial rate of job displacement for moderate-impact jobs"
+    ) / 100.0
+
+    moderate_change = st.number_input(
+        "Moderate Impact Rate Change (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=5.0,
+        step=0.1,
+        help="Enter the annual change in moderate-impact displacement rate"
+    ) / 100.0
+
+with col3:
+    labor_growth = st.number_input(
+        "Labor Force Growth (in millions)",
+        min_value=0.0,
+        max_value=5.0,
+        value=1.0,
+        step=0.1,
+        help="Enter the expected annual growth in labor force (in millions)"
+    )
+
+with col4:
+    new_jobs = st.number_input(
+        "New Jobs per Year (in millions)",
+        min_value=0.0,
+        max_value=10.0,
+        value=2.0,
+        step=0.1,
+        help="Enter the number of new jobs expected to be created annually (in millions)"
+    )
 
 def calculate_projections(
     high_impact_initial_rate,
@@ -39,10 +74,10 @@ def calculate_projections(
     new_jobs_per_year
 ):
     # Initial values for 2024
-    base_labor_force = 168.5
-    base_employed = 161.7
-    high_impact_jobs = 22.74
-    moderate_impact_jobs = 5.08
+    base_labor_force = 168.5  # millions
+    base_employed = 161.7    # millions
+    high_impact_jobs = 22.74  # millions
+    moderate_impact_jobs = 5.08  # millions
     
     years = range(2025, 2034)
     data = []
@@ -52,13 +87,14 @@ def calculate_projections(
         if year == 2025:
             high_rate = high_impact_initial_rate
             moderate_rate = moderate_impact_initial_rate
+            labor_force = base_labor_force
+            total_employed = base_employed
         else:
             high_rate = min(1.0, prev_high_rate * (1 + high_impact_rate_change))
             moderate_rate = min(1.0, prev_moderate_rate * (1 + moderate_impact_rate_change))
+            labor_force = prev_labor_force + labor_force_growth
+            total_employed = prev_employed + new_jobs_per_year - total_ai_job_loss
             
-        # Calculate labor force and employment
-        labor_force = base_labor_force + (labor_force_growth * (year - 2024))
-        
         # Calculate job losses
         high_impact_loss = high_impact_jobs * high_rate
         moderate_impact_loss = moderate_impact_jobs * moderate_rate
@@ -68,20 +104,15 @@ def calculate_projections(
         high_impact_jobs -= high_impact_loss
         moderate_impact_jobs -= moderate_impact_loss
         
-        # Calculate total employment
-        if year == 2025:
-            total_employed = base_employed + new_jobs_per_year/1000000 - total_ai_job_loss
-        else:
-            total_employed = prev_employed + new_jobs_per_year/1000000 - total_ai_job_loss
-            
         # Calculate unemployment
         unemployed = labor_force - total_employed
-        unemployment_rate = (unemployed / labor_force) * 100
+        unemployment_rate = (unemployed / labor_force)
         
         # Store current values for next iteration
         prev_high_rate = high_rate
         prev_moderate_rate = moderate_rate
         prev_employed = total_employed
+        prev_labor_force = labor_force
         
         # Add to results
         data.append({
@@ -99,6 +130,9 @@ def calculate_projections(
     
     return pd.DataFrame(data)
 
+# Add some space before the results
+st.markdown("---")
+
 # Calculate and display results
 df = calculate_projections(
     high_initial,
@@ -109,22 +143,31 @@ df = calculate_projections(
     new_jobs
 )
 
-st.dataframe(df)
+# Display results
+st.subheader("Projected Impact of AI on Employment")
+st.dataframe(
+    df,
+    hide_index=True,
+    column_config={
+        "Year": st.column_config.NumberColumn(format="%d"),
+    },
+    use_container_width=True
+)
 
-# Visualizations
-# Employment Impact Chart
-fig1 = px.line(df, x='Year', 
-               y=['Civilian_Labor_Force', 'Total_Employed'],
-               title='Labor Force and Employment Projections')
+# Create visualizations
+st.subheader("Visualizations")
+
+# Employment and Labor Force Trends
+fig1 = px.line(df, x='Year', y=['Civilian_Labor_Force', 'Total_Employed'],
+               title='Employment and Labor Force Trends')
 st.plotly_chart(fig1)
 
-# Job Loss Chart
-fig2 = px.line(df, x='Year', 
-               y=['High_Impact_Jobs_Lost', 'Moderate_Impact_Jobs_Lost', 'Total_AI_Job_Loss'],
-               title='AI-Related Job Losses Over Time')
+# Job Losses
+fig2 = px.line(df, x='Year', y=['High_Impact_Jobs_Lost', 'Moderate_Impact_Jobs_Lost', 'Total_AI_Job_Loss'],
+               title='AI-Related Job Losses')
 st.plotly_chart(fig2)
 
-# Unemployment Rate Chart
+# Unemployment Rate
 fig3 = px.line(df, x='Year', y='Unemployment_Rate',
-               title='Projected Unemployment Rate')
+               title='Unemployment Rate Projection')
 st.plotly_chart(fig3)
