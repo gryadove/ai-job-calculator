@@ -74,8 +74,8 @@ def calculate_projections(
     new_jobs_per_year
 ):
     # Initial values for 2024
-    base_labor_force = 169.2  # millions
-    base_employed = 162.7    # millions
+    base_labor_force = 168.5  # millions
+    base_employed = 161.7    # millions
     high_impact_jobs = 22.74  # millions
     moderate_impact_jobs = 5.08  # millions
     
@@ -89,11 +89,12 @@ def calculate_projections(
             moderate_rate = moderate_impact_initial_rate
             labor_force = base_labor_force
             total_employed = base_employed
+            prev_ai_job_loss = 0  # Initialize for first year
         else:
             high_rate = min(1.0, prev_high_rate * (1 + high_impact_rate_change))
             moderate_rate = min(1.0, prev_moderate_rate * (1 + moderate_impact_rate_change))
             labor_force = prev_labor_force + labor_force_growth
-            total_employed = prev_employed + new_jobs_per_year - total_ai_job_loss
+            total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss  # Use previous year's job loss
             
         # Calculate job losses
         high_impact_loss = high_impact_jobs * high_rate
@@ -104,8 +105,8 @@ def calculate_projections(
         high_impact_jobs -= high_impact_loss
         moderate_impact_jobs -= moderate_impact_loss
         
-        # Calculate unemployment
-        unemployed = labor_force - total_employed
+        # Calculate unemployment (modified formula)
+        unemployed = labor_force - total_employed + total_ai_job_loss
         unemployment_rate = (unemployed / labor_force)
         
         # Store current values for next iteration
@@ -113,6 +114,7 @@ def calculate_projections(
         prev_moderate_rate = moderate_rate
         prev_employed = total_employed
         prev_labor_force = labor_force
+        prev_ai_job_loss = total_ai_job_loss  # Store for next iteration
         
         # Add to results
         data.append({
