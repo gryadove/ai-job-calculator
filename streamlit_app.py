@@ -213,13 +213,13 @@ st.dataframe(
 # Create visualizations
 st.subheader("Visualizations")
 
-# Combine historical and projected data for visualization
+# First, create the combined dataframe
 combined_df = pd.concat([
     historical_df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']],
     df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']]
 ], ignore_index=True)
 
-# Combined Employment, Labor Force, and Unemployment Rate visualization
+# Now create the first visualization
 fig1 = px.line(combined_df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
                title='Employment, Labor Force, and Unemployment Rate Trends (2000-2033)')
 
@@ -233,19 +233,19 @@ fig1.add_scatter(x=combined_df['Year'],
 fig1.update_layout(
     yaxis=dict(
         title='Millions of Workers',
-        range=[100, 200]  # Sets left y-axis from 100M to 200M
+        range=[100, 200]
     ),
     yaxis2=dict(
         title='Unemployment Rate (%)',
         overlaying='y',
         side='right',
-        range=[2, 25]  # Sets right y-axis from 2% to 25%
+        range=[2, 25]
     )
 )
 
 st.plotly_chart(fig1)
 
-# Job Losses
+# Job Losses visualization
 fig2 = px.line(df, x='Year', 
                y=['# of Tier 1 Jobs Lost (M)', '# of Tier 2 Jobs Lost (M)', 'Total Number of Jobs Lost due to AI (M)'],
                title='AI-Related Job Losses')
