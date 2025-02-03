@@ -245,8 +245,3 @@ fig1.update_layout(
 
 st.plotly_chart(fig1)
 
-# Job Losses visualization
-fig2 = px.line(df, x='Year', 
-               y=['# of Tier 1 Jobs Lost (M)', '# of Tier 2 Jobs Lost (M)', 'Total Number of Jobs Lost due to AI (M)'],
-               title='AI-Related Job Losses')
-st.plotly_chart(fig2)
