@@ -213,6 +213,11 @@ st.dataframe(
 # Create visualizations
 st.subheader("Visualizations")
 
+# Combine historical and projected data for visualization
+combined_df = pd.concat([
+    historical_df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']],
+    df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']]
+], ignore_index=True)
 
 # Combined Employment, Labor Force, and Unemployment Rate visualization
 fig1 = px.line(combined_df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
