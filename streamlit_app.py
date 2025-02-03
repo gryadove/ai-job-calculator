@@ -209,9 +209,26 @@ st.dataframe(
 # Create visualizations
 st.subheader("Visualizations")
 
-# Employment and Labor Force Trends
+# Combined Employment, Labor Force, and Unemployment Rate visualization
 fig1 = px.line(df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
-               title='Employment and Labor Force Trends')
+               title='Employment, Labor Force, and Unemployment Rate Trends')
+
+# Add Unemployment Rate on secondary y-axis
+fig1.add_scatter(x=df['Year'], 
+                y=df['Unemployment Rate (%)'].str.rstrip('%').astype(float), 
+                name='Unemployment Rate (%)',
+                yaxis='y2')
+
+# Update layout for dual axes
+fig1.update_layout(
+    yaxis2=dict(
+        title='Unemployment Rate (%)',
+        overlaying='y',
+        side='right'
+    ),
+    yaxis_title='Millions of Workers'
+)
+
 st.plotly_chart(fig1)
 
 # Job Losses
@@ -219,8 +236,3 @@ fig2 = px.line(df, x='Year',
                y=['# of Tier 1 Jobs Lost (M)', '# of Tier 2 Jobs Lost (M)', 'Total Number of Jobs Lost due to AI (M)'],
                title='AI-Related Job Losses')
 st.plotly_chart(fig2)
-
-# Unemployment Rate
-fig3 = px.line(df, x='Year', y='Unemployment Rate (%)',
-               title='Unemployment Rate Projection')
-st.plotly_chart(fig3)
