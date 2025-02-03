@@ -235,6 +235,19 @@ fig1.update_layout(
         title='Unemployment Rate (%)',
         overlaying='y',
         side='right'
+        # Update layout for dual axes with specific ranges
+fig1.update_layout(
+    yaxis=dict(
+        title='Millions of Workers',
+        range=[100, 200]  # Sets left y-axis from 100M to 200M
+    ),
+    yaxis2=dict(
+        title='Unemployment Rate (%)',
+        overlaying='y',
+        side='right',
+        range=[2, 25]  # Sets right y-axis from 2% to 25%
+    )
+
     ),
     yaxis_title='Millions of Workers'
 )
