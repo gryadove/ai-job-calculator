@@ -26,7 +26,7 @@ st.title("AI Job Impact Calculator")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.write("% of Job Lost: Tier-1 Jobs")
+    st.write("% of Jobs Lost in 2025: Tier-1 Jobs")
     high_initial = st.number_input(
         "",
         min_value=0.0,
@@ -34,10 +34,10 @@ with col1:
         value=5.0,
         step=0.1,
         key="high_initial",
-        help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost."
+        help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
     ) / 100.0
 
-    st.write("Change in % Jobs Lost: Lost-Tier 1 Jobs")
+    st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
     high_change = st.number_input(
         "",
         min_value=0.0,
@@ -49,7 +49,7 @@ with col1:
     ) / 100.0
 
 with col2:
-    st.write("% of Job Lost: Tier 2 Jobs")
+    st.write("% of Jobs Lost in 2025: Tier-2 Jobs")
     moderate_initial = st.number_input(
         "",
         min_value=0.0,
@@ -57,10 +57,10 @@ with col2:
         value=2.0,
         step=0.1,
         key="moderate_initial",
-        help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost."
+        help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
     ) / 100.0
 
-    st.write("Change in % Jobs Lost: Lost-Tier 1 Jobs")
+    st.write("Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
     moderate_change = st.number_input(
         "",
         min_value=0.0,
@@ -108,14 +108,11 @@ def calculate_projections(
     # Initial values for 2024
     base_labor_force = 169.2  # millions
     base_employed = 162.7    # millions
-    initial_high_impact_jobs = 22.74  # millions
-    initial_moderate_impact_jobs = 5.08  # millions
+    high_impact_jobs = 22.74  # millions
+    moderate_impact_jobs = 5.08  # millions
     
     years = range(2025, 2034)
     data = []
-    
-    high_impact_jobs = initial_high_impact_jobs
-    moderate_impact_jobs = initial_moderate_impact_jobs
     
     for year in years:
         if year == 2025:
@@ -124,20 +121,25 @@ def calculate_projections(
             labor_force = base_labor_force
             total_employed = base_employed
             prev_ai_job_loss = 0
+            # Reset jobs to initial values for 2025
+            current_high_impact_jobs = high_impact_jobs
+            current_moderate_impact_jobs = moderate_impact_jobs
         else:
             high_rate = min(1.0, prev_high_rate * (1 + high_impact_rate_change))
             moderate_rate = min(1.0, prev_moderate_rate * (1 + moderate_impact_rate_change))
             labor_force = prev_labor_force + labor_force_growth
             total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss
+            current_high_impact_jobs = prev_high_impact_jobs
+            current_moderate_impact_jobs = prev_moderate_impact_jobs
         
         # Calculate job losses
-        high_impact_loss = high_impact_jobs * high_rate
-        moderate_impact_loss = moderate_impact_jobs * moderate_rate
+        high_impact_loss = current_high_impact_jobs * high_rate
+        moderate_impact_loss = current_moderate_impact_jobs * moderate_rate
         total_ai_job_loss = high_impact_loss + moderate_impact_loss
         
-        # Update remaining impact jobs
-        high_impact_jobs -= high_impact_loss
-        moderate_impact_jobs -= moderate_impact_loss
+        # Update remaining impact jobs for next iteration
+        next_high_impact_jobs = current_high_impact_jobs - high_impact_loss
+        next_moderate_impact_jobs = current_moderate_impact_jobs - moderate_impact_loss
         
         # Calculate unemployment
         unemployed = labor_force - total_employed + total_ai_job_loss
@@ -149,16 +151,18 @@ def calculate_projections(
         prev_employed = total_employed
         prev_labor_force = labor_force
         prev_ai_job_loss = total_ai_job_loss
+        prev_high_impact_jobs = next_high_impact_jobs
+        prev_moderate_impact_jobs = next_moderate_impact_jobs
         
         data.append({
             'Year': year,
             'Total Labor Force (M)': round(labor_force, 2),
             'Total Civilians Employed (M)': round(total_employed, 2),
             '% Rate of Job Loss Tier 1 Jobs': f"{high_rate:.1%}",
-            'Total # of Tier 1 Jobs (M)': round(high_impact_jobs, 2),
+            'Total # of Tier 1 Jobs (M)': round(current_high_impact_jobs, 2),
             '# of Tier 1 Jobs Lost (M)': round(high_impact_loss, 2),
             '% Rate of Job Loss Tier 2 Jobs': f"{moderate_rate:.1%}",
-            'Total # of Tier 2 Jobs (M)': round(moderate_impact_jobs, 2),
+            'Total # of Tier 2 Jobs (M)': round(current_moderate_impact_jobs, 2),
             '# of Tier 2 Jobs Lost (M)': round(moderate_impact_loss, 2),
             'Total Number of Jobs Lost due to AI (M)': round(total_ai_job_loss, 2),
             'Total Number of Unemployed (M)': round(unemployed, 2),
