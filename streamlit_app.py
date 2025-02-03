@@ -4,6 +4,9 @@ import plotly.express as px
 
 st.set_page_config(layout="wide")
 
+# Read historical data
+historical_df = pd.read_csv('Historical Labor Data.csv')
+
 # Custom CSS for table formatting
 st.markdown("""
     <style>
@@ -209,13 +212,19 @@ st.dataframe(
 # Create visualizations
 st.subheader("Visualizations")
 
+# Combine historical and projected data for visualization
+combined_df = pd.concat([
+    historical_df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']],
+    df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']]
+], ignore_index=True)
+
 # Combined Employment, Labor Force, and Unemployment Rate visualization
-fig1 = px.line(df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
-               title='Employment, Labor Force, and Unemployment Rate Trends')
+fig1 = px.line(combined_df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
+               title='Employment, Labor Force, and Unemployment Rate Trends (2000-2033)')
 
 # Add Unemployment Rate on secondary y-axis
-fig1.add_scatter(x=df['Year'], 
-                y=df['Unemployment Rate (%)'].str.rstrip('%').astype(float), 
+fig1.add_scatter(x=combined_df['Year'], 
+                y=combined_df['Unemployment Rate (%)'].str.rstrip('%').astype(float), 
                 name='Unemployment Rate (%)',
                 yaxis='y2')
 
