@@ -4,8 +4,9 @@ import plotly.express as px
 
 st.set_page_config(layout="wide")
 
-# Read historical data
+# Read historical data and clean column names
 historical_df = pd.read_csv('Historical Labor Data.csv')
+historical_df.columns = historical_df.columns.str.strip()
 
 # Custom CSS for table formatting
 st.markdown("""
