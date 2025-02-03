@@ -26,7 +26,7 @@ st.title("AI Job Impact Calculator")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.write("Initial High Impact Rate (%)")
+    st.write("% of Job Lost: Tier-1 Jobs")
     high_initial = st.number_input(
         "",
         min_value=0.0,
@@ -37,7 +37,7 @@ with col1:
         help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost."
     ) / 100.0
 
-    st.write("High Impact Rate Change (%)")
+    st.write("Change in % Jobs Lost: Lost-Tier 1 Jobs")
     high_change = st.number_input(
         "",
         min_value=0.0,
@@ -45,11 +45,11 @@ with col1:
         value=10.0,
         step=0.1,
         key="high_change",
-        help="Enter your assumption of by how many percent the initial 1st Tier Content/Admin job loss rate will increase post 2025."
+        help="Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025."
     ) / 100.0
 
 with col2:
-    st.write("Initial Moderate Impact Rate (%)")
+    st.write("% of Job Lost: Tier 2 Jobs")
     moderate_initial = st.number_input(
         "",
         min_value=0.0,
@@ -57,10 +57,10 @@ with col2:
         value=2.0,
         step=0.1,
         key="moderate_initial",
-        help="Enter your assumption regarding the % of total 2nd Tier Content/Admin jobs that will be lost."
+        help="Enter your assumption regarding the % of total 1st Tier Content/Admin jobs that will be lost."
     ) / 100.0
 
-    st.write("Moderate Impact Rate Change (%)")
+    st.write("Change in % Jobs Lost: Lost-Tier 1 Jobs")
     moderate_change = st.number_input(
         "",
         min_value=0.0,
@@ -68,7 +68,7 @@ with col2:
         value=5.0,
         step=0.1,
         key="moderate_change",
-        help="Enter your assumption of by how many percent the initial 2nd Tier Content/Admin job loss rate will increase post 2025."
+        help="Enter the % increase in the initial 2nd Tier Content/Admin job loss rate post 2025."
     ) / 100.0
 
 with col3:
