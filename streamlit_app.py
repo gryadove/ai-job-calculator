@@ -213,11 +213,6 @@ st.dataframe(
 # Create visualizations
 st.subheader("Visualizations")
 
-# Combine historical and projected data for visualization
-combined_df = pd.concat([
-    historical_df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']],
-    df[['Year', 'Total Labor Force (M)', 'Total Civilians Employed (M)', 'Unemployment Rate (%)']]
-], ignore_index=True)
 
 # Combined Employment, Labor Force, and Unemployment Rate visualization
 fig1 = px.line(combined_df, x='Year', y=['Total Labor Force (M)', 'Total Civilians Employed (M)'],
@@ -229,13 +224,7 @@ fig1.add_scatter(x=combined_df['Year'],
                 name='Unemployment Rate (%)',
                 yaxis='y2')
 
-# Update layout for dual axes
-fig1.update_layout(
-    yaxis2=dict(
-        title='Unemployment Rate (%)',
-        overlaying='y',
-        side='right'
-        # Update layout for dual axes with specific ranges
+# Update layout for dual axes with specific ranges
 fig1.update_layout(
     yaxis=dict(
         title='Millions of Workers',
@@ -247,9 +236,6 @@ fig1.update_layout(
         side='right',
         range=[2, 25]  # Sets right y-axis from 2% to 25%
     )
-
-    ),
-    yaxis_title='Millions of Workers'
 )
 
 st.plotly_chart(fig1)
