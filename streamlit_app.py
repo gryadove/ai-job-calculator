@@ -8,57 +8,48 @@ st.set_page_config(layout="wide")
 historical_df = pd.read_csv('Historical Labor Data.csv')
 historical_df.columns = historical_df.columns.str.strip()
 
-# Custom CSS for inputs and table formatting
+# Custom CSS for inputs
 st.markdown("""
     <style>
     .input-group {
         display: flex;
-        margin-bottom: 20px;
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid #dee2e6;
+        margin-bottom: 30px;
+        align-items: center;
     }
     .input-content {
-        flex: 2;
+        flex: 3;
+        padding-right: 20px;
     }
     .input-title {
-        font-size: 1.1em;
+        font-size: 1.2em;
         font-weight: bold;
-        margin-bottom: 5px;
-        color: #2c3e50;
+        margin-bottom: 8px;
+        color: #333;
     }
     .input-description {
         font-size: 0.9em;
-        color: #6c757d;
-        margin-bottom: 10px;
+        color: #666;
         line-height: 1.4;
+        max-width: 80%;
     }
     .input-field {
         flex: 1;
-        margin-left: 20px;
+        display: flex;
+        justify-content: flex-end;
     }
+    /* Make all number inputs the same width and right-aligned */
     .stNumberInput {
-        margin-top: 10px;
+        width: 100px !important;
+        margin-left: auto;
     }
-    .stDataFrame [data-testid="stDataFrameDataCell"] {
-        text-align: right;
-    }
-    .stDataFrame [data-testid="stHeaderCell"] {
-        height: 100px;
-        white-space: normal;
-        text-align: center;
-        vertical-align: middle;
-        padding: 10px;
-        font-size: 0.9em;
-        background-color: #f8f9fa;
+    /* Ensure number input text is right-aligned */
+    .stNumberInput input {
+        text-align: right !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Create columns for inputs across the top
-col1, col2, col3, col4 = st.columns(4)
-
+# Example of how to structure one input group
 with col1:
     st.markdown("""
         <div class="input-group">
@@ -66,7 +57,7 @@ with col1:
                 <div class="input-title">% of Jobs Lost in 2025: Tier-1 Jobs</div>
                 <div class="input-description">Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025</div>
             </div>
-        </div>
+            <div class="input-field">
     """, unsafe_allow_html=True)
     high_initial = st.number_input(
         "",
