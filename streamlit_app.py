@@ -36,7 +36,6 @@ with col1:
         min_value=0.0,
         max_value=100.0,
         value=5.0,
-        format="%g%%",
         step=0.1,
         key="high_initial",
         help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
@@ -48,7 +47,6 @@ with col1:
         min_value=0.0,
         max_value=100.0,
         value=10.0,
-        format="%g%%",
         step=0.1,
         key="high_change",
         help="Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025."
@@ -61,7 +59,6 @@ with col2:
         min_value=0.0,
         max_value=100.0,
         value=2.0,
-        format="%g%%",
         step=0.1,
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
@@ -73,7 +70,6 @@ with col2:
         min_value=0.0,
         max_value=100.0,
         value=5.0,
-        format="%g%%",
         step=0.1,
         key="moderate_change",
         help="Enter the % increase in the initial 2nd Tier Content/Admin job loss rate post 2025."
