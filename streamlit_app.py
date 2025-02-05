@@ -14,6 +14,10 @@ st.markdown("""
     .input-group {
         display: flex;
         margin-bottom: 20px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
     }
     .input-content {
         flex: 2;
@@ -22,15 +26,20 @@ st.markdown("""
         font-size: 1.1em;
         font-weight: bold;
         margin-bottom: 5px;
+        color: #2c3e50;
     }
     .input-description {
         font-size: 0.9em;
-        color: #666;
+        color: #6c757d;
         margin-bottom: 10px;
+        line-height: 1.4;
     }
     .input-field {
         flex: 1;
         margin-left: 20px;
+    }
+    .stNumberInput {
+        margin-top: 10px;
     }
     .stDataFrame [data-testid="stDataFrameDataCell"] {
         text-align: right;
@@ -42,6 +51,7 @@ st.markdown("""
         vertical-align: middle;
         padding: 10px;
         font-size: 0.9em;
+        background-color: #f8f9fa;
     }
     </style>
 """, unsafe_allow_html=True)
