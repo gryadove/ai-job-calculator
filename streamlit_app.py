@@ -156,13 +156,13 @@ with col4:
         format="%.3f",
         key="new_jobs"
     )
-   def calculate_projections(
-    high_impact_initial_rate,
-    moderate_impact_initial_rate,
-    high_impact_rate_change,
-    moderate_impact_rate_change,
-    labor_force_growth,
-    new_jobs_per_year
+def calculate_projections(
+        high_impact_initial_rate,
+        moderate_impact_initial_rate,
+        high_impact_rate_change,
+        moderate_impact_rate_change,
+        labor_force_growth,
+        new_jobs_per_year
 ):
     # Initial values for 2024
     base_labor_force = 169.2  # millions
@@ -190,7 +190,7 @@ with col4:
             total_employed = prev_employed + new_jobs_per_year - prev_ai_job_loss
             current_high_impact_jobs = prev_high_impact_jobs
             current_moderate_impact_jobs = prev_moderate_impact_jobs
-        
+            
         # Calculate job losses
         high_impact_loss = current_high_impact_jobs * high_rate
         moderate_impact_loss = current_moderate_impact_jobs * moderate_rate
