@@ -50,7 +50,7 @@ with col1:
         step=0.1,
         key="high_change",
         help="Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025."
-    ) / 100.0
+    ) 
 
 with col2:
     st.write("% of Jobs Lost in 2025: Tier-2 Jobs")
@@ -62,7 +62,7 @@ with col2:
         step=0.1,
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
-    ) / 100.0
+    ) / 100.00
 
     st.write("Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
     moderate_change = st.number_input(
@@ -73,7 +73,7 @@ with col2:
         step=0.1,
         key="moderate_change",
         help="Enter the % increase in the initial 2nd Tier Content/Admin job loss rate post 2025."
-    ) / 100.0
+    ) 
 
 with col3:
     st.write("Labor Force Growth (in millions)")
