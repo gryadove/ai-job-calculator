@@ -196,7 +196,7 @@ st.dataframe(
         "Year": st.column_config.NumberColumn(format="%d", width="small"),
         "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
         "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "% Rate of Job Loss Tier 1 Jobs": st.column_config.TextColumn(format="%.1f%%", width="small")
+        "% Rate of Job Loss Tier 1 Jobs": st.column_config.TextColumn(format="%.1f%%", width="small"),
         "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
         "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
         "% Rate of Job Loss Tier 2 Jobs": st.column_config.TextColumn(format="%.1f%%", width="small"),
