@@ -49,6 +49,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Define columns
+col1, col2, col3, col4 = st.columns(4)
+
 # Example of how to structure one input group
 with col1:
     st.markdown("""
