@@ -8,117 +8,75 @@ st.set_page_config(layout="wide")
 historical_df = pd.read_csv('Historical Labor Data.csv')
 historical_df.columns = historical_df.columns.str.strip()
 
-# Define the layout structure
+# Custom CSS for table formatting
 st.markdown("""
     <style>
-    .input-section {
-        display: grid;
-        grid-template-columns: 3fr 1fr;  /* Left column 75%, right column 25% */
-        gap: 20px;
-        margin-bottom: 30px;
+    .stDataFrame [data-testid="stDataFrameDataCell"] {
+        text-align: right;
     }
-    .input-left {
-        padding-right: 20px;
-    }
-    .input-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 8px;
-    }
-    .input-description {
-        font-size: 0.9em;
-        color: #666;
-        line-height: 1.4;
-    }
-    .input-right {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+    .stDataFrame [data-testid="stHeaderCell"] {
+        height: 80px;
+        white-space: normal;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 1. First Tier Jobs Lost in 2025
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">% of Jobs Lost in 2025: Tier-1 Jobs</div>
-            <div class="input-description">Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025</div>
-        </div>
-    """, unsafe_allow_html=True)
+st.title("AI Job Impact Calculator")
+
+# Create columns for inputs across the top
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.write("% of Jobs Lost in 2025: Tier-1 Jobs")
     high_initial = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
         value=5.0,
         step=0.1,
-        key="high_initial"
+        key="high_initial",
+        help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
     ) / 100.0
 
-# 2. First Tier Change Rate Post 2025
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">% Change in the Job Loss Rate Post 2025: Tier-1 Jobs</div>
-            <div class="input-description">Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025.</div>
-        </div>
-    """, unsafe_allow_html=True)
+    st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
     high_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
         value=10.0,
         step=0.1,
-        key="high_change"
+        key="high_change",
+        help="Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025."
     ) / 100.0
 
-# 3. Second Tier Jobs Lost in 2025
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">% of Jobs Lost in 2025: Tier-2 Jobs</div>
-            <div class="input-description">Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025.</div>
-        </div>
-    """, unsafe_allow_html=True)
+with col2:
+    st.write("% of Jobs Lost in 2025: Tier-2 Jobs")
     moderate_initial = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
         value=2.0,
         step=0.1,
-        key="moderate_initial"
+        key="moderate_initial",
+        help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
     ) / 100.0
 
-# 4. Second Tier Change Rate Post 2025
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">Change in the Job Loss Rate Post 2025: Tier-2 Jobs</div>
-            <div class="input-description">Enter the % increase in the initial 2nd Tier Content/Admin job loss rate post 2025.</div>
-        </div>
-    """, unsafe_allow_html=True)
+    st.write("Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
     moderate_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
         value=5.0,
         step=0.1,
-        key="moderate_change"
+        key="moderate_change",
+        help="Enter the % increase in the initial 2nd Tier Content/Admin job loss rate post 2025."
     ) / 100.0
 
-# 5. Labor Force Growth
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">Labor Force Growth (in millions)</div>
-            <div class="input-description">Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033.</div>
-        </div>
-    """, unsafe_allow_html=True)
+with col3:
+    st.write("Labor Force Growth (in millions)")
     labor_growth = st.number_input(
         "",
         min_value=0.0,
@@ -126,18 +84,12 @@ with st.container():
         value=0.620,
         step=0.001,
         format="%.3f",
-        key="labor_growth"
+        key="labor_growth",
+        help="Per Bureau of Labor Statistics the expected change in U.S. labor force due to demographics and migration is forecasted to be 620,000 workers/year till 2033. If you believe that the annual labor force growth will be different, please enter the number of new workers expected to enter the labor force annually (in millions)."
     )
 
-# 6. New Jobs Per Year
-st.markdown('<div class="input-section">', unsafe_allow_html=True)
-with st.container():
-    st.markdown("""
-        <div class="input-left">
-            <div class="input-title">New Jobs Per Year (in millions)</div>
-            <div class="input-description">The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year.</div>
-        </div>
-    """, unsafe_allow_html=True)
+with col4:
+    st.write("New Jobs Per Year (in millions)")
     new_jobs = st.number_input(
         "",
         min_value=0.0,
@@ -145,7 +97,8 @@ with st.container():
         value=1.084,
         step=0.001,
         format="%.3f",
-        key="new_jobs"
+        key="new_jobs",
+        help="The 25-year historical average of Net Job Creation in the U.S. is 1.084 million jobs per year. The calculator assumes that the non-AI economy job formation will continue at this annual pace till 2033. If you believe that the annual job creation will be different, please enter the new jobs you expect annually (in millions)."
     )
 def calculate_projections(
         high_impact_initial_rate,
