@@ -46,8 +46,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("AI Job Impact Calculator")
-
 # Create columns for inputs across the top
 col1, col2, col3, col4 = st.columns(4)
 
