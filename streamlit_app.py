@@ -161,15 +161,15 @@ def calculate_projections(
             'Year': year,
             'Total Labor Force (M)': round(labor_force, 2),
             'Total Civilians Employed (M)': round(total_employed, 2),
-            '% Rate of Job Loss Tier 1 Jobs': f"{high_rate:.1%}",
+            '% Rate of Job Loss Tier 1 Jobs': high_rate,
             'Total # of Tier 1 Jobs (M)': round(current_high_impact_jobs, 2),
             '# of Tier 1 Jobs Lost (M)': round(high_impact_loss, 2),
-            '% Rate of Job Loss Tier 2 Jobs': f"{moderate_rate:.1%}",
+            '% Rate of Job Loss Tier 2 Jobs': moderate_rate,
             'Total # of Tier 2 Jobs (M)': round(current_moderate_impact_jobs, 2),
             '# of Tier 2 Jobs Lost (M)': round(moderate_impact_loss, 2),
             'Total Number of Jobs Lost due to AI (M)': round(total_ai_job_loss, 2),
             'Total Number of Unemployed (M)': round(unemployed, 2),
-            'Unemployment Rate (%)': f"{unemployment_rate:.1%}"
+            'Unemployment Rate (%)': unemployment_rate
         })
     
     return pd.DataFrame(data)
