@@ -156,7 +156,7 @@ with col4:
         format="%.3f",
         key="new_jobs"
     )
-    def calculate_projections(
+   def calculate_projections(
     high_impact_initial_rate,
     moderate_impact_initial_rate,
     high_impact_rate_change,
