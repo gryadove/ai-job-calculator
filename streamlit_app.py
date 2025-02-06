@@ -37,7 +37,7 @@ st.markdown("""
     Explore how artificial intelligence could reshape employment over the next decade. This interactive calculator 
     lets you simulate potential job market changes through 2033, focusing on:
     * Tier 1 Jobs - Most vulnerable to AI automation
-    * Tier 2 Jobs - Moderately vulnerable to AI impact
+    * Tier 2 Jobs - Moderately vulnerable to AI automation
     
     Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
     Read the full analysis on Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai)
