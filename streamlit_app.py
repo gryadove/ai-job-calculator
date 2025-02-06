@@ -227,7 +227,7 @@ st.dataframe(
 st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
 
 # Create visualizations
-st.subheader("Visualizations")
+st.subheader("Employement Trends in Age of AI")
 
 # Create the combined dataframe
 combined_df = pd.concat([
