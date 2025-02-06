@@ -14,14 +14,15 @@ st.markdown("""
     .stDataFrame [data-testid="stDataFrameDataCell"] {
         text-align: right;
     }
-    .stDataFrame [data-testid="stHeaderCell"] {
-        min-height: 200px !important;
+    div[data-testid="stDataFrame"] div[data-testid="stDataFrameContainer"] div[role="columnheader"] {
+        min-height: 150px !important;
         height: 200px !important;
         max-height: 200px !important;
+        line-height: 1.2 !important;
+        padding: 10px !important;
         white-space: normal;
         text-align: center;
         vertical-align: middle;
-        padding: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
