@@ -202,18 +202,18 @@ st.dataframe(
     df,
     hide_index=True,
     column_config={
-        "Year": st.column_config.NumberColumn(format="%d", width="40px"),
-        "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small"),
-        "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "% Rate of Job Loss Tier 2 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small"),
-        "Total # of Tier 2 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "# of Tier 2 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "Total Number of Jobs Lost due to AI (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "Total Number of Unemployed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
-        "Unemployment Rate (%)": st.column_config.NumberColumn(format="%.1f%%", width="small")
+        "Year": st.column_config.NumberColumn(format="%d", width="small"),
+        "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total\nLabor\nForce\n(M)"),
+        "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total\nCivilians\nEmployed\n(M)"),
+        "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small", label="% Rate of\nJob Loss\nTier 1\nJobs"),
+        "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total #\nof Tier 1\nJobs\n(M)"),
+        "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="# of\nTier 1\nJobs Lost\n(M)"),
+        "% Rate of Job Loss Tier 2 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small", label="% Rate of\nJob Loss\nTier 2\nJobs"),
+        "Total # of Tier 2 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total #\nof Tier 2\nJobs\n(M)"),
+        "# of Tier 2 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="# of\nTier 2\nJobs Lost\n(M)"),
+        "Total Number of Jobs Lost due to AI (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total\nNumber of\nJobs Lost\ndue to AI\n(M)"),
+        "Total Number of Unemployed (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Total\nNumber of\nUnemployed\n(M)"),
+        "Unemployment Rate (%)": st.column_config.NumberColumn(format="%.1f%%", width="small", label="Unemployment\nRate\n(%)")
     },
     use_container_width=True
 )
