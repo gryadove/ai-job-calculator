@@ -15,7 +15,7 @@ st.markdown("""
         text-align: right;
     }
     .stDataFrame [data-testid="stHeaderCell"] {
-        height: 120px;
+        height: 200px;
         white-space: normal;
         text-align: center;
         vertical-align: middle;
@@ -200,7 +200,7 @@ st.dataframe(
     df,
     hide_index=True,
     column_config={
-        "Year": st.column_config.NumberColumn(format="%d", width="small"),
+        "Year": st.column_config.NumberColumn(format="%d", width="40px"),
         "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
         "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small"),
         "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small"),
