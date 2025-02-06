@@ -234,7 +234,7 @@ fig1 = px.line(combined_df, x='Year', y=['Total Labor Force (M)', 'Total Civilia
 
 # Add Unemployment Rate on secondary y-axis
 fig1.add_scatter(x=combined_df['Year'], 
-                y=combined_df['Unemployment Rate (%)'].str.rstrip('%').astype(float), 
+                y=combined_df['Unemployment Rate (%)'],  # removed the str.rstrip('%') part
                 name='Unemployment Rate (%)',
                 yaxis='y2')
 
