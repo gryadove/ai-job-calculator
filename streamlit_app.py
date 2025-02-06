@@ -39,7 +39,7 @@ with col1:
         step=0.1,
         key="high_initial",
         help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
-    ) / 100.0
+    ) 
 
     st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
     high_change = st.number_input(
@@ -62,7 +62,7 @@ with col2:
         step=0.1,
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
-    ) / 100.00
+    ) 
 
     st.write("Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
     moderate_change = st.number_input(
@@ -108,6 +108,12 @@ def calculate_projections(
         labor_force_growth,
         new_jobs_per_year
 ):
+   # Convert input percentages to decimals for calculations
+    high_impact_initial_rate = high_impact_initial_rate / 100
+    moderate_impact_initial_rate = moderate_impact_initial_rate / 100
+    high_impact_rate_change = high_impact_rate_change / 100
+    moderate_impact_rate_change = moderate_impact_rate_change / 100
+
     # Initial values for 2024
     base_labor_force = 169.2  # millions
     base_employed = 162.7    # millions
@@ -135,6 +141,7 @@ def calculate_projections(
             current_high_impact_jobs = prev_high_impact_jobs
             current_moderate_impact_jobs = prev_moderate_impact_jobs
             
+            
         # Calculate job losses
         high_impact_loss = current_high_impact_jobs * high_rate
         moderate_impact_loss = current_moderate_impact_jobs * moderate_rate
@@ -161,15 +168,15 @@ def calculate_projections(
             'Year': year,
             'Total Labor Force (M)': round(labor_force, 2),
             'Total Civilians Employed (M)': round(total_employed, 2),
-            '% Rate of Job Loss Tier 1 Jobs': round (high_rate, 3),
+            '% Rate of Job Loss Tier 1 Jobs': round(high_rate * 100, 1),
             'Total # of Tier 1 Jobs (M)': round(current_high_impact_jobs, 2),
             '# of Tier 1 Jobs Lost (M)': round(high_impact_loss, 2),
-            '% Rate of Job Loss Tier 2 Jobs': round (moderate_rate, 3),
+            '% Rate of Job Loss Tier 2 Jobs': round(moderate_rate * 100, 1),
             'Total # of Tier 2 Jobs (M)': round(current_moderate_impact_jobs, 2),
             '# of Tier 2 Jobs Lost (M)': round(moderate_impact_loss, 2),
             'Total Number of Jobs Lost due to AI (M)': round(total_ai_job_loss, 2),
             'Total Number of Unemployed (M)': round(unemployed, 2),
-            'Unemployment Rate (%)': round (unemployment_rate, 3)
+              'Unemployment Rate (%)': round(unemployment_rate * 100, 1)
         })
     
     return pd.DataFrame(data)
