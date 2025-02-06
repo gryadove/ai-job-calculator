@@ -31,7 +31,19 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("AI Job Impact Calculator")
+st.title("Future of Jobs: AI Impact Calculator")
+
+st.markdown("""
+    Explore how artificial intelligence could reshape employment over the next decade. This interactive calculator 
+    lets you simulate potential job market changes through 2033, focusing on:
+    * Tier 1 Jobs - Most vulnerable to AI automation
+    * Tier 2 Jobs - Moderately vulnerable to AI impact
+    
+    Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.
+    """)
+
+# Optional: Add a visual separator
+st.markdown("---")
 
 # Create columns for inputs across the top
 col1, col2, col3, col4 = st.columns(4)
