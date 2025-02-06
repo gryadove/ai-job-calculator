@@ -207,10 +207,10 @@ st.dataframe(
     df,
     hide_index=True,
     column_config={
-        "Year": st.column_config.NumberColumn(format="%d", width="small"),
+        "Year": st.column_config.NumberColumn(format="%d", width="40px"),
         "Total Labor Force (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Labor Force (M)"),
         "Total Civilians Employed (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="Employed (M)"),
-        "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small", label="T1 Job Loss Rate (%)"),
+        "% Rate of Job Loss Tier 1 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="120", label="T1 Job Loss Rate (%)"),
         "Total # of Tier 1 Jobs (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="T1 Jobs (M)"),
         "# of Tier 1 Jobs Lost (M)": st.column_config.NumberColumn(format="%.2f", width="small", label="T1 Jobs Lost (M)"),
         "% Rate of Job Loss Tier 2 Jobs": st.column_config.NumberColumn(format="%.1f%%", width="small", label="T2 Job Loss Rate (%)"),
