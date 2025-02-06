@@ -15,7 +15,7 @@ st.markdown("""
         text-align: right;
     }
     .stDataFrame [data-testid="stHeaderCell"] {
-        height: 80px;
+        height: 120px;
         white-space: normal;
         text-align: center;
         vertical-align: middle;
