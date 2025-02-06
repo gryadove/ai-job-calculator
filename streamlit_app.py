@@ -40,7 +40,7 @@ st.markdown("""
     * Tier 2 Jobs - Moderately vulnerable to AI automation
     
     Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
-    Read the full analysis on Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai)
+    For additional explanation and analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai)
 
     """)
 
