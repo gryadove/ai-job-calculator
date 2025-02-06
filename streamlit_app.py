@@ -24,6 +24,10 @@ st.markdown("""
         text-align: center;
         vertical-align: middle;
     }
+    div[data-testid="stDataFrame"] div[data-testid="stDataFrameContainer"] div[role="columnheader"] div {
+        text-align: center !important;
+        justify-content: center !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
