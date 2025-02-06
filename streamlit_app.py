@@ -15,7 +15,9 @@ st.markdown("""
         text-align: right;
     }
     .stDataFrame [data-testid="stHeaderCell"] {
-        height: 200px;
+        min-height: 200px !important;
+        height: 200px !important;
+        max-height: 200px !important;
         white-space: normal;
         text-align: center;
         vertical-align: middle;
