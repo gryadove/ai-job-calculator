@@ -85,8 +85,6 @@ with col2:
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
     ) 
-#Addvertical space between inputs within col1
-st.markdown("<div style='margin: 30px 0;'></div>",unsafe_allow_html=True)
 
 st.write("% Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
 moderate_change = st.number_input(
