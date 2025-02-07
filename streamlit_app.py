@@ -61,11 +61,11 @@ with col1:
         key="high_initial",
         help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
     ) 
-#Addvertical space between inputs within col1
-st.markdown("<div style='margin: 30px 0;'></div>",unsafe_allow_html=True)
+# Add vertical space between inputs within col1
+st.markdown("<div style='margin: 30px 0;'></div>", unsafe_allow_html=True)
 
-    st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
-    high_change = st.number_input(
+st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
+high_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
@@ -88,8 +88,8 @@ with col2:
 #Addvertical space between inputs within col1
 st.markdown("<div style='margin: 30px 0;'></div>",unsafe_allow_html=True)
 
-    st.write("% Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
-    moderate_change = st.number_input(
+st.write("% Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
+moderate_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
