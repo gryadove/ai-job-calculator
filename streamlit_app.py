@@ -40,7 +40,7 @@ st.markdown("""
     * Tier 2 Jobs - Moderately vulnerable to AI automation
     
     For Tier definitions and additional analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai.
-    </br>Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
+    <br>Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
 
     """)
 
@@ -254,8 +254,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Add space before visualizations
-st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
 # Add space before visualizations
 st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
 
