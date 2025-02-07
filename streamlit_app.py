@@ -40,7 +40,6 @@ st.markdown("""
     * Tier 2 Jobs - Moderately vulnerable to AI automation
     
     For Tier definitions and additional analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai.
-            
     Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
 
     """)
@@ -237,7 +236,26 @@ st.dataframe(
     },
     use_container_width=True
 )
+# Display results
+st.subheader("Projected Impact of AI on Employment")
+st.dataframe(
+    df,
+    hide_index=True,
+    column_config={
+        # [existing column config remains the same]
+    },
+    use_container_width=True
+)
+# Add source citation with link right after the table
+st.markdown("""
+    <div style="font-size: 0.9em; color: #666; margin: 10px 0 30px 0;">
+        Source for 2020–2024: U.S. Bureau of Labor Statistics Current Population Survey (CPS), annual averages. 
+        <a href="https://www.census.gov/programs-surveys/cps.html" target="_blank">CPS Details</a>
+    </div>
+""", unsafe_allow_html=True)
 
+# Add space before visualizations
+st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
 # Add space before visualizations
 st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
 
