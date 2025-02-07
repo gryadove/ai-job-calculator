@@ -86,7 +86,9 @@ with col2:
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
     ) 
-
+    # Just use empty lines for spacing
+    st.write("")
+    
     st.write("%Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
     moderate_change = st.number_input(
         "",
