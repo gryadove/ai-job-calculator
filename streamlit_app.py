@@ -236,16 +236,6 @@ st.dataframe(
     },
     use_container_width=True
 )
-# Display results
-st.subheader("Projected Impact of AI on Employment")
-st.dataframe(
-    df,
-    hide_index=True,
-    column_config={
-        # [existing column config remains the same]
-    },
-    use_container_width=True
-)
 # Add source citation with link right after the table
 st.markdown("""
     <div style="font-size: 0.9em; color: #666; margin: 10px 0 30px 0;">
