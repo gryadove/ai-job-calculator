@@ -40,7 +40,7 @@ st.markdown("""
     * Tier 2 Jobs - Moderately vulnerable to AI automation
     
     For Tier definitions and additional analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai.
-    <br/>Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
+    <br>Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
 
     """)
 
@@ -61,12 +61,9 @@ with col1:
         key="high_initial",
         help="Enter your assumption regarding % of total 1st Tier Content/Admin jobs that will be lost due to AI in 2025"
     ) 
-    # Just use empty lines for spacing
-    st.write("")
-    st.write("")
 
-st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
-high_change = st.number_input(
+    st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
+    high_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
@@ -75,6 +72,7 @@ high_change = st.number_input(
         key="high_change",
         help="Enter the % increase in the initial 1st Tier Content/Admin job loss rate post 2025."
     ) 
+
 with col2:
     st.write("% of Jobs Lost in 2025: Tier-2 Jobs")
     moderate_initial = st.number_input(
@@ -86,12 +84,9 @@ with col2:
         key="moderate_initial",
         help="Enter your assumption regarding % of total 2nd Tier Content/Admin jobs that will be lost due to AI in 2025."
     ) 
-    # Just use empty lines for spacing
-    st.write("")
-    st.write("")
-    
-st.write("% Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
-moderate_change = st.number_input(
+
+    st.write("%Change in the Job Loss Rate Post 2025: Tier-2 Jobs")
+    moderate_change = st.number_input(
         "",
         min_value=0.0,
         max_value=100.0,
