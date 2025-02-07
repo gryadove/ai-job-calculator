@@ -63,7 +63,6 @@ with col1:
     ) 
     # Just use empty lines for spacing
     st.write("")
-    st.write("")
     
     st.write("% Change in the Job Loss Rate Post 2025: Tier-1 Jobs")
     high_change = st.number_input(
