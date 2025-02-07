@@ -39,7 +39,7 @@ st.markdown("""
     * Tier 1 Jobs - Most vulnerable to AI automation
     * Tier 2 Jobs - Moderately vulnerable to AI automation
     
-    For Tier definitions and additional analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai.
+    For Tier definitions and additional analysis read Substack (https://aiforstarters.substack.com/p/unemployment-in-the-age-of-ai.</br>
     Adjust the parameters below to create different scenarios and see possible employment outcomes. Click on question mark icons for parameter definitions.  
 
     """)
@@ -249,7 +249,7 @@ st.dataframe(
 # Add source citation with link right after the table
 st.markdown("""
     <div style="font-size: 0.9em; color: #666; margin: 10px 0 30px 0;">
-        Source for 2020–2024: U.S. Bureau of Labor Statistics Current Population Survey (CPS), annual averages. 
+        Source: Initial values based on U.S. Bureau of Labor Statistics Current Population Survey (CPS), annual averages. 
         <a href="https://www.census.gov/programs-surveys/cps.html" target="_blank">CPS Details</a>
     </div>
 """, unsafe_allow_html=True)
@@ -318,5 +318,13 @@ fig1.update_layout(
 # Display the plot
 st.plotly_chart(fig1, use_container_width=True)
 
+# Add source citation for the graph
+st.markdown("""
+    <div style="font-size: 0.9em; color: #666; margin: 10px 0;">
+        Source for 2020–2024: U.S. Bureau of Labor Statistics Current Population Survey (CPS), annual averages. 
+        <a href="https://www.census.gov/programs-surveys/cps.html" target="_blank">CPS Details</a>
+        <br>2025-2033: Projected values based on input parameters
+    </div>
+""", unsafe_allow_html=True)
 # Add final spacing
 st.markdown("<div style='margin: 50px 0;'></div>", unsafe_allow_html=True)
